@@ -3,13 +3,14 @@ package org.example;
 import java.util.Scanner;
 
 public class Main {
+    private static final Scanner scanner = new Scanner(System.in);
+
     public static void main(String[] args) {
         Database dbManager = new Database();
         try {
             dbManager.connect();
             dbManager.createTableIfNotExists();
 
-            Scanner scanner = new Scanner(System.in);
             String dni;
             while (true) {
                 System.out.print("Por favor, introduzca su DNI (formato: 12345678A): ");
@@ -37,8 +38,8 @@ public class Main {
                 int opcion = scanner.nextInt();
 
                 switch (opcion) {
-                    case 1 -> saldo = registrarGasto(scanner, saldo);
-                    case 2 -> saldo = registrarIngreso(scanner, saldo);
+                    case 1 -> saldo = registrarGasto(saldo);
+                    case 2 -> saldo = registrarIngreso(saldo);
                     case 3 -> System.out.printf("Su saldo actual es: %.2f€%n", saldo);
                     case 4 -> {
                         System.out.println("¡Gracias por usar el programa!");
@@ -54,7 +55,7 @@ public class Main {
         }
     }
 
-    private static double registrarGasto(Scanner scanner, double saldo) {
+    public static double registrarGasto(double saldo) {
         System.out.println("Seleccione el concepto de gasto:");
         System.out.println("1. Vacaciones");
         System.out.println("2. Alquiler");
@@ -71,7 +72,7 @@ public class Main {
                 System.out.printf("Se ha realizado un gasto de %.2f€ en Vacaciones.%n", monto);
             }
             case 2 -> {
-                System.out.print("Ingrese el el gasto en Alquiler: ");
+                System.out.print("Ingrese el gasto en Alquiler: ");
                 monto = scanner.nextDouble();
                 System.out.printf("Se ha realizado un gasto de %.2f€ en Alquiler.%n", monto);
             }
@@ -82,7 +83,7 @@ public class Main {
                 System.out.printf("Se ha realizado un gasto de %.2f€ en IRPF.%n", monto);
             }
             case 4 -> {
-                System.out.print("Ingrese el hasto en Vicios variados: ");
+                System.out.print("Ingrese el gasto en Vicios variados: ");
                 monto = scanner.nextDouble();
                 System.out.printf("Se ha realizado un gasto de %.2f€ en Vicios variados.%n", monto);
             }
@@ -93,7 +94,7 @@ public class Main {
         return saldo;
     }
 
-    private static double registrarIngreso(Scanner scanner, double saldo) {
+    public static double registrarIngreso(double saldo) {
         System.out.println("Seleccione el concepto de ingreso:");
         System.out.println("1. Nómina");
         System.out.println("2. Venta en páginas de segunda mano");
